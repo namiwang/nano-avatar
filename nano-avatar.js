@@ -33,14 +33,12 @@ Polymer({
     }
   },
   _textChanged: function(text) {
-    var colors, options, svg, svgHTML, textElement, wrapper;
+    var colors, name, options, styles, svg, svgData, textElement;
     colors = ["#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#2ecc71", "#27ae60", "#e67e22", "#d35400", "#3498db", "#2980b9", "#e74c3c", "#c0392b", "#9b59b6", "#8e44ad", "#bdc3c7", "#34495e", "#2c3e50", "#95a5a6", "#7f8c8d", "#ec87bf", "#d870ad", "#f69785", "#9ba37e", "#b49255", "#b49255", "#a94136"];
     options = {
-      seed: 0,
-      charCount: 1,
-      height: 128,
-      width: 128,
-      fontSize: 64,
+      height: 48,
+      width: 48,
+      fontSize: 20,
       fontWeight: 400,
       radius: 5
     };
@@ -49,26 +47,25 @@ Polymer({
     textElement.setAttribute('x', '50%');
     textElement.setAttribute('y', '50%');
     textElement.setAttribute('dy', '0.35em');
-    textElement.setAttribute('pointerEvents', 'auto');
+    textElement.setAttribute('pointer-events', 'auto');
     textElement.setAttribute('fill', 'white');
-    textElement.setAttribute('textAnchor', 'middle');
-    textElement.style.fontSize = '48px';
+    textElement.setAttribute('text-anchor', 'middle');
+    textElement.style.fontSize = '20px';
     svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.attributes = {
-      'pointer-events': 'none',
-      width: 128,
-      height: 128
-    };
-    svg.style = {
+    svg.setAttribute('pointerEvents', 'none');
+    svg.setAttribute('width', 48);
+    svg.setAttribute('height', 48);
+    styles = {
       backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-      width: '128px',
-      height: '128px',
+      width: '48px',
+      height: '48px',
       borderRadius: '5px'
     };
+    for (name in styles) {
+      svg.style[name] = styles[name];
+    }
     svg.appendChild(textElement);
-    wrapper = document.createElement('div');
-    wrapper.appendChild(svg.cloneNode(true));
-    svgHTML = window.btoa(unescape(encodeURIComponent(wrapper.outerHTML)));
-    return this.$.wrapper.setAttribute('src', 'data:image/svg+xml;base64,' + svgHTML);
+    svgData = window.btoa((new XMLSerializer).serializeToString(svg));
+    return this.$.wrapper.setAttribute('src', 'data:image/svg+xml;base64,' + svgData);
   }
 });
