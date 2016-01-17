@@ -1,6 +1,0 @@
-- support email
-- support gravatar
-- support non-latin character
-- support more options: height/width, font, color, etc.
-- docs
-- test
